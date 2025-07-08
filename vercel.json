@@ -1,0 +1,20 @@
+{
+    "rewrites": [
+      { "source": "/", "destination": "/pages/index.html" },
+      { "source": "/index.html", "destination": "/pages/index.html" },
+      { "source": "/about.html", "destination": "/pages/about.html" },
+      { "source": "/select.html", "destination": "/pages/select.html" },
+      { "source": "/loading.html", "destination": "/pages/loading.html" },
+      { "source": "/result.html", "destination": "/pages/result.html" },
+      { "source": "/detail_1.html", "destination": "/pages/detail_1.html" },
+      { "source": "/detail_2.html", "destination": "/pages/detail_2.html" },
+      { "source": "/detail_3.html", "destination": "/pages/detail_3.html" },
+      { "source": "/bali.html", "destination": "/pages/bali.html" },
+      { "source": "/barcelona.html", "destination": "/pages/barcelona.html" },
+      { "source": "/hongkong.html", "destination": "/pages/hongkong.html" },
+      { "source": "/newyork.html", "destination": "/pages/newyork.html" },
+      { "source": "/tokyo.html", "destination": "/pages/tokyo.html" }
+
+
+    ]
+  }
