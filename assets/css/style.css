@@ -172,7 +172,8 @@ h3 {
     width: clamp(120px, 15vw, 220px); /* 이미지도 반응형 크기로 */
     border-radius: 10px;
     margin: clamp(2px, 1vw, 15px); /* 그림 사이 간격 띄우기 */
-    height: auto;
+    height: clamp(120px, 15vw, 220px); /* 이미지도 반응형 크기로 */
+    object-fit: cover; /*이미지 크기에 맞기 자르기*/
 }
 
 .block-card {

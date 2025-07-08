@@ -50,15 +50,21 @@
 
                 if(choice1 === "nature" && choice2 === "rest"){
 
-                }
+                }  
                 if(choice1 === "nature" && choice2 === "tour"){
 
                 }
                 if(choice1 === "city" && choice2 === "rest"){
-
+                    // 발리  || 바르셀로나
+                    const pages = ["barcelona.html", "bali.html"];
+                    const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
+                    location.href = randPage;
                 }
                 if(choice1 === "city" && choice2 === "tour"){
-                    location.href = "newyork.html";
+                    // 뉴욕 || 도쿄 || 홍콩
+                    const pages = ["newyork.html", "tokyo.html", "hongkong.html"];
+                    const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
+                    location.href = randPage;
                 }
             });
         </script>
