@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <!-- 반응형 추가 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 변경 고려 -->
+        <title>TripNow - 여행지 추천을 한눈에</title>
+
+        <!-- 외부 스타일시트 불러오기 -->
+        <link rel="stylesheet" href="../assets/css/style.css" />
+
+        <!-- pretendard폰트 적용 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+        <style>
+            h3 {
+                text-align: left;
+                font-weight: 600;  
+            }
+            .notice-meta {
+                color: #888;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            .inner-content.boxed {
+                border: 1px solid #ccc;
+                padding: 1.5rem;
+                width: clamp(100px, 80%, 800px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+             <!--  헤더  -->
+            <header class="header">
+                <a href="index.html">
+                    <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+                </a>
+                <a href="about.html">About</a>
+            </header>
+            <!--  메인 콘텐츠 영역  -->
+            <main>
+            <section class="inner-content boxed">
+                <!-- detail 콘텐츠 -->
+                <h2 style="text-align: left;">[공지] 사이트 사용설명서</h2>
+                    <p class="notice-meta">
+                        2025-07-08<br>작성자: 관리자
+                    </p>
+                    <article class="notice-content">
+                        <p>
+                            <strong>TripNow</strong>는 여러분의 여행 취향을 바탕으로, 수많은 여행지 중에서 가장 잘 맞는 곳을 빠르게 추천해주는 여행 큐레이션 서비스입니다.<br>
+                            처음 사용하시는 분들도 어렵지 않게 이용하실 수 있도록 간단한 사용 방법을 안내드릴게요!
+                        </p>
+                        <h3>1. 여행 취향 선택하기</h3>
+                        <p>
+                            처음 화면에서 두 가지 질문이 순차적으로 나옵니다.<br><br>
+                            · <strong>자연 vs 도시</strong> : 자연 속에서 힐링하고 싶은지, 도심 속에서 에너지를 느끼고 싶은지를 선택해 주세요.<br>
+                            · <strong>휴양 vs 관광</strong> : 여유로운 휴식을 원하시는지, 다양한 볼거리와 액티비티를 즐기고 싶은지를 선택해 주세요.
+                        </p>
+                        <p>각 질문에는 직관적인 이미지가 함께 제공되어 있으니, 본인의 취향에 맞게 편하게 고르시면 됩니다.</p>
+                        <h3>2. 결과 확인하기</h3>
+                        <p>
+                            모든 선택을 마치고 나면, 화면 하단에 [제출하기] 버튼이 나타납니다.<br>
+                            버튼을 누르면 선택한 취향에 기반한 여행지를 자동으로 추천해드려요.<br>
+                            추천된 도시의 특징, 주요 명소, 음식 정보까지 한눈에 확인하실 수 있도록 구성되어 있습니다. 
+                        </p>
+                        <h3>3. 다시 선택하고 싶다면?</h3>
+                        <p>
+                            결과 페이지에서 [다시 선택하러 가기] 버튼을 누르면 처음으로 돌아가 다시 여행 취향을 선택할 수 있어요.<br>
+                            여러 조합을 시도해 보며, 다양한 여행지를 탐색해 보세요!
+                        </p>
+                        <h3>TripNow는 여러분의 여행 준비가 조금 더 설레고 즐거워지도록 돕고 싶습니다.
+                            지금 바로 시작해 보세요! ✈️🌍</h3>
+                    </article>
+                    <div style="text-align: center;">
+                        <a href="about.html" class="hero-btn"> 목록으로 돌아가기 </a>
+                    </div>
+            </section>
+            </main>
+            <!--  푸터  -->
+            <footer class="footer">
+                <p>@ 2025 TripNow All rights reserved.</p>
+            </footer>
+        </div>
+    </body>
+</html>

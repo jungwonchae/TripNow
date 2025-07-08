@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <!-- 반응형 추가 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 변경 고려 -->
+        <title>TripNow - 여행지 추천을 한눈에</title>
+
+        <!-- 외부 스타일시트 불러오기 -->
+        <link rel="stylesheet" href="../assets/css/style.css" />
+
+        <!-- pretendard폰트 적용 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+    </head>
+    <body>
+        <div class="wrapper">
+             <!--  헤더  -->
+            <header class="header">
+                <a href="index.html">
+                    <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+                </a>
+                <a href="about.html">About</a>
+            </header>
+            <!--  메인 콘텐츠 영역  -->
+            <main>
+                <section class="main-hero">
+                    <img src="../assets/images/loading.svg" alt="loading" />
+                    <h2>당신에게 맞는 여행지를 찾고 있어요!<br>조금만 기다려주세요</h2>
+                </section>
+            </main>
+            <!--  푸터  -->
+            <footer class="footer">
+                <p>@ 2025 TripNow All rights reserved.</p>
+            </footer>
+        </div>
+        <script>
+            // loading 페이지 내에서 다음 페이지 계산을 위함
+            setTimeout(() => {
+                location.href = 'result.html';
+            }, 2000); // 2초후
+        </script>
+    </body>
+</html>

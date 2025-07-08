@@ -1,0 +1,190 @@
+/*  기본 설정  */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*  헤더  */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+}
+
+.header a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 300; /* light */
+    display: flex;
+    align-items: center;
+}
+
+.header img {
+    width: clamp(100px, 15vw, 140px);
+    height: auto;
+}
+
+/*  메인 영역  */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #000000; /* #cacaca 랑 색상 고려 */
+    width: 80%;
+    margin: 2rem auto;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 0.7rem 1.2rem;
+    background: #1D1D36;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 400; /* normal */
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
+    margin-top: 1.5rem;
+}
+  
+.hero-btn:hover {
+    background: #e0e0e0;
+    border: none;
+    cursor: pointer;
+}
+
+/* 타이틀 */
+.question-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    font-size: clamp(14px, 4vw, 25px); /* 반응형으로 사용하기 위함 */
+    font-weight: 700;
+    text-align: center;
+}
+
+h3 {
+    font-size: clamp(9px, 4vw, 20px); /* 반응형으로 사용하기 위함 */
+    font-weight: 400; /* normal */
+    text-align: center;
+}
+
+/* === 여행지 설명 공통 부분 === */
+
+/* pin, star, yum */
+
+.list h2 img {
+    /* padding-left: 3rem; */
+    vertical-align: middle;
+    width: clamp(40px, 10vw, 60px);
+    height: auto;
+}
+
+.block h2 img {
+    vertical-align: middle;
+    width: clamp(40px, 10vw, 60px);
+    height: auto;
+}
+
+/*  */
+
+.list {
+    text-align: left;
+    padding: 0 2rem;
+}
+
+.list h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(14px, 4vw, 25px); /* 반응형으로 사용하기 위함 */
+}
+
+.list ul {
+    padding-left: 6rem; /* 글머리 포함 들여쓰기 */
+    text-align: left;
+}
+
+.list ul li {
+    text-indent: 0.5rem; /* 마커와 글자 사이 여백 */
+    font-size: clamp(10px, 4vw, 18px); /* 반응형으로 사용하기 위함 */
+}
+
+.list ul li::marker { /* 마커 사이즈 조정 */
+    font-size: 0.8rem;
+}
+
+.list > img {
+    display: block;
+    margin: 1rem auto;
+    width: 80%;
+}
+
+/* 놓치면 안 될 명소 / OO에서 먹어보아야할 음식 */
+
+.block {
+    text-align: left;
+    padding: 0 2rem;
+}
+
+.block h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/*  */
+
+.block-list{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* 각 명소, 음식 사진 */
+.block-card img {
+    width: clamp(120px, 15vw, 220px); /* 이미지도 반응형 크기로 */
+    border-radius: 10px;
+    margin: clamp(2px, 1vw, 15px); /* 그림 사이 간격 띄우기 */
+    height: auto;
+}
+
+.block-card {
+    text-align: center;
+}
+
+/*  푸터  */
+.footer {
+    background: #1E2A38;
+    color: #FFFFFF;
+    text-align: center;
+    height: 52px;
+    padding: 0.3rem 0;
+    margin-top: 2rem;
+}

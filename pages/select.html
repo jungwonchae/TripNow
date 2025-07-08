@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <!-- 반응형 추가 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 변경 고려 -->
+        <title>TripNow - 여행지 추천을 한눈에</title>
+
+        <!-- 외부 스타일시트 불러오기 -->
+        <link rel="stylesheet" href="../assets/css/style.css" />
+
+        <!-- pretendard폰트 적용 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+        <style>
+            /* 선택지 묶음 */
+            .choice-row {
+                display: flex;
+                align-items: center;  /* 번호 세로 중앙 정렬 */
+                /* gap: 2rem; */
+            }
+
+            .question-number{
+                font-size: clamp(24px, 4vw, 35px); /* 반응형으로 사용하기 위함 */
+                font-weight: 700; /* bold */
+            }
+
+            .choice-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* 이미지 선택지 */
+            .choices {
+                display: flex;
+                justify-content: center;
+                gap: clamp(0.5rem, 4vw, 2rem);/* 최소 0.5rem, 최대 2rem */
+            }
+
+            .choice img {
+                width: clamp(80px, 20vw, 180px); /* 이미지도 반응형 크기로 */
+                border: 1px solid #9B9898;
+                border-radius: 10px;
+                margin: clamp(2px, 1vw, 15px); /* 그림 사이 간격 띄우기 */
+                height: auto;
+            }
+
+            .choice img:hover {
+                cursor: pointer;
+            }
+
+            .choice img.selected{ /* 그림 선택 시 효과 */
+                width: clamp(80px, 20vw, 180px); /* 이미지도 반응형 크기로 */
+                border: 3px solid #9B9898;
+                border-radius: 10px;
+                margin: clamp(2px, 1vw, 15px); /* 그림 사이 간격 띄우기 */
+                height: auto;
+            }
+
+            /* 태그 */
+            .choice-tag {
+                font-size: clamp(16px, 3vw, 24px); /* 반응형으로 사용하기 위함 */
+                font-weight: 700; /* bold */
+                margin-top: 17px;
+                text-align: center;
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="wrapper">
+             <!--  헤더  -->
+            <header class="header">
+                <a href="index.html">
+                    <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+                </a>
+                <a href="about.html">About</a>
+            </header>
+            <!--  메인 콘텐츠 영역  -->
+            <main>
+                <section class="main-hero">
+                    <div class="question-container">
+                        <h2>당신의 여행 취향을 선택해주세요</h2>
+                        <!-- 선택지 박스-->
+                        <div class="choice-row">
+                            <p class="question-number">1.</p>
+                            <div class="choice-content">
+                                <!-- 선택지 1 -->
+                                <div class="choices">
+                                    <div class="choice">
+                                        <img id="choice1-nature" src="../assets/images/nature.svg" alt="nature"/>
+                                    </div>
+                                    <div class="choice">
+                                        <img id="choice1-city" src="../assets/images/city.svg" alt="city"/>
+                                    </div>
+                                </div>
+                                <!-- 선택지 설명 -->
+                                <p class="choice-tag">#자연 또는 도시</p>
+                            </div>
+                        </div>
+
+                        <!-- 선택지 박스-->
+                        <div class="choice-row">
+                            <p class="question-number">2.</p>
+                            <div class="choice-content">
+                                <!-- 선택지 2 -->
+                                <div class="choices">
+                                    <div class="choice">
+                                        <img id="choice2-rest" src="../assets/images/rest.svg" alt="rest"/>
+                                    </div>
+                                    <div class="choice">
+                                        <img id="choice2-tour" src="../assets/images/tour.svg" alt="tour"/>
+                                    </div>
+                                </div>
+                                <!-- 선택지 설명 -->
+                                <p class="choice-tag">#휴양 또는 관광</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 제출 버튼 -->
+                    <button class="hero-btn" id="submit"> 제출하기 </button>
+                </section>
+            </main>
+            <!--  푸터  -->
+            <footer class="footer">
+                <p>@ 2025 TripNow All rights reserved.</p>
+            </footer>
+        </div>
+        <script>
+            window.onload = function () {
+                sessionStorage.clear(); // 새로고침 시 모든 선택 초기화
+            };
+
+            document.querySelectorAll(".choice img").forEach((img)=>{
+                img.addEventListener("click", () => {
+                    const [group, value] = img.id.split("-");
+                    sessionStorage.setItem(group, value);
+                    document.querySelectorAll(`img[id^="${group}"]`).forEach(i => i.classList.remove("selected"));
+                    img.classList.add("selected");
+                })
+            });
+
+            document.getElementById("submit").addEventListener("click", function() {
+                const choice1 = sessionStorage.getItem("choice1");
+                const choice2 = sessionStorage.getItem("choice2");
+
+                if(!choice1 || !choice2){
+                    alert("두 가지 모두 선택해주세요!");
+                }
+                else{
+                    window.location.href = "loading.html"
+                };
+            });
+        </script>
+    </body>
+</html>
