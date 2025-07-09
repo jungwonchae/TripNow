@@ -13,6 +13,8 @@
       { "source": "/barcelona.html", "destination": "/pages/barcelona.html" },
       { "source": "/hongkong.html", "destination": "/pages/hongkong.html" },
       { "source": "/newyork.html", "destination": "/pages/newyork.html" },
-      { "source": "/tokyo.html", "destination": "/pages/tokyo.html" }
+      { "source": "/tokyo.html", "destination": "/pages/tokyo.html" },
+      { "source": "/maldives.html", "destination": "/pages/maldives.html" },
+      { "source": "/newzeland.html", "destination": "/pages/newzeland.html" }
     ]
   }

@@ -49,7 +49,10 @@
                 console.log("choice2:", choice2);
 
                 if(choice1 === "nature" && choice2 === "rest"){
-
+                    // 몰디브 || 뉴질랜드
+                    const pages = ["maldives.html", "newzeland.html"];
+                    const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
+                    location.href = randPage;
                 }  
                 if(choice1 === "nature" && choice2 === "tour"){
 
