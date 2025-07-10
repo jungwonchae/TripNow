@@ -17,77 +17,70 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 
   <style>
+
     main {
-      padding: 2rem;
-    }
-
-    .user-info h2 {
-      margin: 0 0 5px;
-    }
-
-    .user-info p {
-      margin: 3px 0;
-      color: #333;
-      font-size: 16px;
-    }
-
-    .tab-menu {
-      display: flex;
-      margin: 32px 0 16px;
-      border-bottom: 2px solid #222;
-    }
-
-    .tab-menu button {
-      background: none;
-      border: none;
-      font-size: 16px;
-      padding: 15px 17px;
-      cursor: pointer;
-      font-weight: 500;
-      color: #555;
-    }
-
-    .tab-menu button.active {
-      font-weight: bold;
-      border-bottom: 2px solid #1d1d3f;
-      color: #1d1d3f;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    table {
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 16px;
+      max-width: 900px;
+      margin: 2rem auto; /* 위 아래 2rem 간격, 좌우 자동 */
+      background: white;
+      padding: 2rem 0;
+      border-top: 3px solid #1D1D36;
+      border-bottom: 3px solid #1D1D36;
+      font-family: 'Pretendard', sans-serif; /* pretendard 폰트 지정, 적용 안될 시, sans-serif  */
     }
 
-    th, td {
-      padding: 16px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-      font-size: 16px;
+    hr {
+      width: 100%;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid #1D1D36;
     }
 
-    /* 로그아웃 버튼 화면 하단 고정 */
-    .logout-fixed {
-      position: fixed;
-      bottom: 100px;
-      left: 40px;
-      background: #1d1d3f;
+    /* 작성자, 날짜, 소속 동아리 등을 나타내는 영역 */
+    .post-meta {
+      display: flex;
+      justify-content: space-between; /*좌 우 끝으로 배치*/
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .post-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 1.2rem;
+    }
+
+    /* 게시글 본문 내용 */ 
+    .post-content {
+      white-space: pre-line;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* 버튼을 감싸는 박스 */
+    .btn-box {
+      margin-top: 2rem;
+      text-align: right;
+    }
+    
+    /* 목록 버튼 */
+    .btn-box button {
+      background-color: #202032;
       color: white;
       border: none;
-      padding: 15px 16px;
-      font-size: 16px;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
       border-radius: 4px;
       cursor: pointer;
     }
+
+    .btn-box button:hover {
+      /* 목록 버튼 색깔이 바뀌는 호버 효과 추가 */
+      background-color: #343456;
+    }
   </style>
+
 </head>
 <body>
 <!-- ========== 상단 공통 헤더 영역 ========== -->
@@ -111,14 +104,75 @@
 
 <!-- 메인 콘텐츠 영역 -->
 <main>
-   
-</main>
+    <div class="post-meta">
+      <span id="post-type"></span>
+      <span id="post-date"></span>
+    </div>
+  
+    <div class="post-title" id="post-title"></div>
+
+    <div class="post-meta">
+      <span id="post-view"></span>
+      <span id="post-author"></span>
+    </div>
+
+    <hr><br>
+
+    <div class="post-content" id="post-content"></div>
+  
+    <div class="btn-box">
+      <button onclick="location.href='club_intro.html'">목록</button>
+    </div>
+  </main>
 
 <!-- 페이지 하단 푸터 -->
 <footer class="footer">
   <p>© 2025 TripNow. All rights reserved.</p>
 </footer>
 
+<script>
+    const db = window.db;
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get("id");
+
+    if (postId) {
+      db.collection("posts").doc(postId).get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+
+        // 조회수 증가
+        const view = (data.views || 0) + 1;
+        db.collection("posts").doc(postId).update({
+          views: view
+        });
+          
+         // 여행 모집 or 여행 이야기
+        let type = "";
+        if(data.type === "group"){
+          type = "여행 모집"
+        } else if(data.type === "story"){
+          type = "여행 이야기"
+        }
+        document.getElementById("post-type").textContent = type;
+        document.getElementById("post-date").textContent = data.date.toDate().toLocaleDateString();
+        document.getElementById("post-title").textContent = data.title;
+        document.getElementById("post-view").textContent = `조회수: ${data.views}`;
+        document.getElementById("post-content").textContent = data.content;
+
+        // 작성자 id
+        const emailId = data.author.split("@")[0]; // '@' 앞부분만 추출
+        document.getElementById("post-author").textContent = `작성자: ${emailId}`;
+        } else {
+          alert("글을 찾을 수 없습니다.");
+        }
+      }).catch((error) => {
+        console.error("글 불러오기 실패:", error);
+        alert("글을 불러오는 중 오류가 발생했습니다.");
+      });
+    } else {
+      alert("잘못된 접근입니다.");
+    }
+  </script>
 
 </body>
 </html>
