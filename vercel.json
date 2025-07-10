@@ -1,20 +1,24 @@
 {
     "rewrites": [
-      { "source": "/", "destination": "/pages/index.html" },
+      { "source": "/", "destination": "/pages/home.html" },
       { "source": "/index.html", "destination": "/pages/index.html" },
-      { "source": "/about.html", "destination": "/pages/about.html" },
-      { "source": "/select.html", "destination": "/pages/select.html" },
-      { "source": "/loading.html", "destination": "/pages/loading.html" },
-      { "source": "/result.html", "destination": "/pages/result.html" },
-      { "source": "/detail_1.html", "destination": "/pages/detail_1.html" },
-      { "source": "/detail_2.html", "destination": "/pages/detail_2.html" },
-      { "source": "/detail_3.html", "destination": "/pages/detail_3.html" },
       { "source": "/bali.html", "destination": "/pages/bali.html" },
       { "source": "/barcelona.html", "destination": "/pages/barcelona.html" },
+      { "source": "/detail.html", "destination": "/detail/loading.html" },
+      { "source": "/home.html", "destination": "/pages/home.html" },
       { "source": "/hongkong.html", "destination": "/pages/hongkong.html" },
-      { "source": "/newyork.html", "destination": "/pages/newyork.html" },
-      { "source": "/tokyo.html", "destination": "/pages/tokyo.html" },
+      { "source": "/list_detail.html", "destination": "/pages/list_detail.html" },
+      { "source": "/loading.html", "destination": "/pages/loading.html" },
+      { "source": "/login.html", "destination": "/pages/login.html" },
       { "source": "/maldives.html", "destination": "/pages/maldives.html" },
-      { "source": "/newzeland.html", "destination": "/pages/newzeland.html" }
+      { "source": "/mypage.html", "destination": "/pages/mypage.html" },
+      { "source": "/newyork.html", "destination": "/pages/newyork.html" },
+      { "source": "/newzeland.html", "destination": "/pages/newzeland.html" },
+      { "source": "/notice.html", "destination": "/pages/notice.html" },
+      { "source": "/result.html", "destination": "/pages/result.html" },
+      { "source": "/select.html", "destination": "/pages/select.html" },
+      { "source": "/signup.html", "destination": "/pages/signup.html" },
+      { "source": "/tokyo.html", "destination": "/pages/tokyo.html" },
+      { "source": "/write.html", "destination": "/pages/write.html" }
     ]
   }
