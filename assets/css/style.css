@@ -180,6 +180,15 @@ h3 {
     text-align: center;
 }
 
+.reselect-box {
+    text-align: center;
+}
+
+.reselect-box p {
+    margin-bottom: 0rem;
+    text-align: center;
+  }
+
 /*  푸터  */
 .footer {
     background: #1E2A38;
