@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 - TripNow</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase 초기화 -->
+    <script src="../assets/js/firebase-init.js"></script>
+
+    <!-- header랑 footer 외부 라이브러리에서 css적용 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Pretendard', sans-serif;
+            height: 100vh;
+            display: flex;
+        }
+
+        .half {
+            width: 50%;
+            height: 100%;
+        }
+
+        .intro-panel {
+            background-color: #1E2A38;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .intro-panel img {
+            width: 160px;
+        }
+
+        .intro-panel h1 {
+            font-size: 26px;
+            margin: 0;
+        }
+
+        .intro-panel p {
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        .login-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 64px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .login-right h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .subtext {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .google-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #4285f4;
+            color: white;
+            font-weight: 500;
+            border: none;
+            padding: 11px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 25px;
+        }
+
+        .google-login img {
+            height: 25px;
+            margin-right: 18px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            font-size: 15px;
+            color: #999;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ccc;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"].password-input {
+            width: 100%;
+            padding: 11px 40px 11px 0;
+            font-size: 1rem;
+            border: none;
+            border-bottom: 1px solid #aaa;
+            background: transparent;
+            outline: none;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .toggle-eye {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .checkbox-group {
+            margin: 15px 0;
+            font-size: 15px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .login-btn {
+            margin-top: 15px;
+            background: #1d1d3f;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #2c2c5a;
+        }
+
+        .footer-link {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 15px;
+            color: #888;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            color: #1d1d3f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 공통 왼쪽 소개 패널 -->
+    <div class="half intro-panel">
+        <img src="../assets/images/white_logo.svg" alt="트립나우 로고" />
+        <h1>여행지 추천을 한눈에</h1>
+        <p>
+            지금 로그인하고 취향에 맞는 여행지에<br>
+            대한 이야기를 나누어보아요!
+        </p>
+      </div>
+
+    <!-- 로그인 폼 영역 -->
+    <div class="half login-right">
+        <h2>로그인</h2>
+        <div class="subtext">아직 회원이 아니세요? <a href="signup.html">회원가입</a></div>
+
+        <!-- 구글 로그인 -->
+        <button class="google-login">
+            <img src="../assets/images/google_logo.svg" alt="구글 로그인" />
+            구글 로그인
+        </button>
+
+        <!-- divider 코드를 적용해서 양 사이에 글이 쳐지도록 했음 -->
+        <div class="divider">또는</div>
+
+        <!-- 이메일 작성 칸 -->
+        <!-- bottom에 선 그어서 구분할 수 있도록 하기 -->
+        <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" placeholder="이메일을 입력하세요." />
+        </div>
+
+        <!-- 비밀번호 작성칸 -->
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" class="password-input" placeholder="비밀번호를 입력하세요." />
+            <img src="../assets/images/nonevisible.svg" class="toggle-eye" data-target="password" data-visible="false"
+                alt="비밀번호 보기 토글" />
+        </div>
+
+        <button class="login-btn">로그인</button>
+
+        <a href="index.html" class="footer-link">메인으로</a>
+    </div>
+
+
+    <!-- 비밀번호 보기/숨기기 스크립트 -->
+    <script>
+        const toggleIcons = document.querySelectorAll('.toggle-eye');
+
+        toggleIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const inputId = icon.dataset.target;
+                const input = document.getElementById(inputId);
+                const isVisible = icon.dataset.visible === 'true';
+
+                if (isVisible) {
+                    input.type = 'password';
+                    icon.src = '../assets/images/nonevisible.svg';
+                } else {
+                    input.type = 'text';
+                    icon.src = '../assets/images/visible.svg';
+                }
+
+                icon.dataset.visible = (!isVisible).toString();
+            });
+        });
+    </script>
+
+    <!-- Firebase 로그인 코드 -->
+    <script>
+        document.querySelector(".login-btn").addEventListener("click", () => {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+    
+        if (!email || !password) {
+            alert("이메일과 비밀번호를 모두 입력해주세요.");
+            return;
+        }
+    
+        // Firebase 로그인 시도
+        window.auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+            // 로그인 성공
+            const user = userCredential.user;
+
+            alert("로그인 성공!");
+            
+            localStorage.setItem("loginUser", JSON.stringify(user));
+            location.href = "home.html"; // 성공 시 홈으로 이동
+            })
+            .catch((error) => {
+            // 로그인 실패
+            alert("로그인 실패: " + error.message);
+            });
+        });
+  </script>
+
+</body>
+
+</html>

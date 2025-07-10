@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <!-- 반응형 추가 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 변경 고려 -->
+        <title>TripNow - 여행지 추천을 한눈에</title>
+
+        <!-- Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+        <!-- Firebase 초기화 -->
+        <script src="../assets/js/firebase-init.js"></script>
+
+        <!-- 외부 스타일시트 불러오기 -->
+        <link rel="stylesheet" href="../assets/css/style.css" />
+
+        <!-- pretendard폰트 적용 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+        <style>
+            h3 {
+                text-align: left;
+                font-weight: 600;  
+            }
+            .notice-meta {
+                color: #888;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+            .inner-content.boxed {
+                border: 1px solid #ccc;
+                padding: 1.5rem;
+                width: clamp(100px, 80%, 800px);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+             <!--  헤더  -->
+            <header class="header">
+                <a href="index.html">
+                    <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+                </a>
+                <a href="notice.html">About</a>
+            </header>
+            <!--  메인 콘텐츠 영역  -->
+            <main>
+            <section class="inner-content boxed">
+                <h2 style="text-align: left;" id="notice-title">...</h2>
+                    <p class="notice-meta" id="notice-meta"></p>
+                    
+                    <article class="notice-content" id="notice-content"></article>
+
+                    <div style="text-align: center; margin: 2rem;">
+                        <a href="notice.html" class="hero-btn"> 목록으로 돌아가기 </a>
+                    </div>
+            </section>
+            </main>
+            <!--  푸터  -->
+            <footer class="footer">
+                <p>@ 2025 TripNow All rights reserved.</p>
+            </footer>
+        </div>
+        <!-- 파이어베이스로 가지고 오기 -->
+        <script>
+            const db = firebase.firestore();
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+      
+            if (id) {
+              db.collection("notices")
+                .doc(id)
+                .get()
+                .then((doc) => {
+                  if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById("notice-title").innerText = data.title;
+                    document.getElementById("notice-meta").innerHTML =
+                      data.date.toDate().toLocaleDateString() +
+                      "<br>작성자: " + (data.author || "관리자");
+                    document.getElementById("notice-content").innerHTML = data.content;
+                  } else {
+                    document.getElementById("notice-title").innerText = "공지 없음";
+                    document.getElementById("notice-content").innerText =
+                      "해당 공지를 찾을 수 없습니다.";
+                  }
+                });
+                } else {
+                document.getElementById("notice-title").innerText = "공지 없음";
+                document.getElementById("notice-content").innerText =
+                    "공지 ID가 없습니다.";
+                }
+          </script>
+    </body>
+</html>

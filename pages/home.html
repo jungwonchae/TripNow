@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripNow</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase 초기화 -->
+  <script src="../assets/js/firebase-init.js"></script>
+
+  <!-- 외부 스타일시트 불러오기 -->
+  <link rel="stylesheet" href="../assets/css/style2.css" />
+  <!-- pretendard폰트 적용 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+</head>
+
+<body>
+<!-- ========== 상단 공통 헤더 영역 ========== -->
+<header class="main-header">
+  <div class="header-top container">
+
+    <div class="logo-box">
+      <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+    </div>
+
+    <a href="login.html" class="login-link">LOGIN</a>
+  </div>
+
+  <!-- 하단 네비게이션 바 -->
+  <nav class="nav-bar">
+    <a href="home.html">Home</a>
+    <a href="list.html">TALK</a>
+    <a href="notice.html">About</a>
+  </nav>
+</header>
+
+<!-- ========== 메인 콘텐츠 영역 ========== -->
+<main>
+
+  <!-- 메인 소개 배너 -->
+  <section class="main-hero">
+    <div class="hero-overlay">
+      <h1>여행지 추천을 한눈에</h1>
+      <p>
+        여행 취향을 바탕으로,<br>
+        수많은 여행지 중에서 가장 잘 맞는 곳을<br>
+        빠르게 추천해주는 여행 큐레이션 서비스입니다.
+      </p>
+      <a href="index.html" class="hero-btn">Find Your City →</a>
+    </div>
+  </section>
+
+  <!-- 글 About -->
+  <section class="article-board">
+    <div class="container article">
+
+      <!--  글 영역 -->
+      <div class="article-column">
+        <div class="article-header">
+          <h2>여행 모집</h2>
+          <a href="list.html">read more</a>
+        </div>
+        <ul></ul> <!-- js 로 넣기 -->
+      </div>
+
+      <!--  여행 이야기 영역 -->
+      <div class="article-column">
+        <div class="article-header">
+          <h2>여행 이야기</h2>
+          <a href="list.html">read more</a>
+        </div>
+        <ul></ul> <!-- js 로 넣기 -->
+      </div>
+
+    </div>
+  </section>
+</main>
+<!--  푸터  -->
+<footer class="footer">
+    <p>@ 2025 TripNow All rights reserved.</p>
+</footer>
+
+<!--  로그인 여부에 따라 로그인/마이페이지 링크 교체 -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const loginLink = document.querySelector(".login-link");
+
+    // 로그인 유저가 존재하면 "MYPAGE"로 전환
+    window.auth.onAuthStateChanged((user) => {
+      if (user) {
+        loginLink.textContent = "MYPAGE";
+        loginLink.href = "mypage.html";
+      } else {
+        loginLink.textContent = "LOGIN";
+        loginLink.href = "login.html";
+      }
+    });
+  });
+  const db = window.db;
+
+  // 여행 모집 가져오기
+  db.collection("posts")
+      .where("type", "==", "group")
+      .limit(5) // 5개 가져오기
+      .get()
+      .then(snapshot => {
+        const groupList = document.querySelectorAll(".article-column")[0].querySelector("ul");
+        groupList.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${data.title}</span><span>${data.date.toDate().toLocaleDateString()}</span>`;
+          groupList.appendChild(li);
+        });
+  
+  // 여행 이야기 가져오기
+  db.collection("posts")
+      .where("type", "==", "story")
+      .limit(5)
+      .get()
+      .then(snapshot => {
+        const storyList = document.querySelectorAll(".article-column")[1].querySelector("ul");
+        storyList.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${data.title}</span><span>${data.date.toDate().toLocaleDateString()}</span>`;
+          storyList.appendChild(li);
+        });
+      });
+  });
+
+</script>
+
+</body>
+</html>

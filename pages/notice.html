@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8"/>
+        <!-- 반응형 추가 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- 변경 고려 -->
+        <title>TripNow - 여행지 추천을 한눈에</title>
+
+        <!-- Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+        <!-- Firebase 초기화 -->
+        <script src="../assets/js/firebase-init.js"></script>
+
+        <!-- 외부 스타일시트 불러오기 -->
+        <link rel="stylesheet" href="../assets/css/style.css" />
+
+        <!-- pretendard폰트 적용 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+        <style>
+            .inner-content{
+                width: 90%;
+                overflow: hidden;
+            }
+
+            .notice-items {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .notice-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border-bottom: 1px solid #ccc;
+                font-size: 1rem;
+            }
+
+            .notice-title {
+                flex: 1;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                text-decoration: none;
+                color: black;
+            }
+
+            .notice-date {
+                color: #888;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+             <!--  헤더  -->
+            <header class="header">
+                <a href="index.html">
+                    <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+                </a>
+                <a href="notice.html">About</a>
+            </header>
+            <!--  메인 콘텐츠 영역  -->
+            <main>
+            <section class="inner-content">
+                <!-- notice 콘텐츠 -->
+                <h2 style="text-align: left;">Notice</h2>
+                <section id="notice-list" class="notice-list">
+                    <ul id="notice-list" class="notice-items">
+                        <!-- 자바스크립트로 공지 하나하나 만들어 넣기 -->
+                    </ul>
+                </section>
+            </main>
+            <!--  푸터  -->
+            <footer class="footer">
+                <p>@ 2025 TripNow All rights reserved.</p>
+            </footer>
+        </div>
+        <script>
+            const db = firebase.firestore();
+
+            db.collection("notices")
+            .orderBy("date", "desc")
+            .get()
+            .then(snapshot => {
+                const list = document.getElementById("notice-list");
+
+                snapshot.forEach(doc => {
+                const notice = doc.data();
+                const li = document.createElement("li");
+                li.className = "notice-item";
+
+                li.innerHTML = `
+                    <a class="notice-title" href="detail.html?id=${doc.id}">
+                    ${notice.title}
+                    </a>
+                    <span class="notice-date">${notice.date.toDate().toLocaleDateString()}</span>
+                `;
+
+                list.appendChild(li);
+                });
+            });
+        </script>
+    </body>
+</html>

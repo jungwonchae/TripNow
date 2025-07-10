@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MYPAGE</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase 초기화 -->
+  <script src="../assets/js/firebase-init.js"></script>
+
+  <link rel="stylesheet" href="../assets/css/style2.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+  <style>
+    main {
+      padding: 2rem;
+    }
+
+    .user-info h2 {
+      margin: 0 0 5px;
+    }
+
+    .user-info p {
+      margin: 3px 0;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .tab-menu {
+      display: flex;
+      margin: 32px 0 16px;
+      border-bottom: 2px solid #222;
+    }
+
+    .tab-menu button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      padding: 15px 17px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #555;
+    }
+
+    .tab-menu button.active {
+      font-weight: bold;
+      border-bottom: 2px solid #1d1d3f;
+      color: #1d1d3f;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    /* 로그아웃 버튼 화면 하단 고정 */
+    .logout-fixed {
+      position: fixed;
+      bottom: 100px;
+      left: 40px;
+      background: #1d1d3f;
+      color: white;
+      border: none;
+      padding: 15px 16px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<!-- ========== 상단 공통 헤더 영역 ========== -->
+<header class="main-header">
+    <div class="header-top container">
+  
+      <div class="logo-box">
+        <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+      </div>
+  
+      <a href="login.html" class="login-link">LOGIN</a>
+    </div>
+  
+    <!-- 하단 네비게이션 바 -->
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="list.html">TALK</a>
+      <a href="notice.html">About</a>
+    </nav>
+</header>
+
+<!-- 메인 콘텐츠 영역 -->
+<main>
+   <!-- 사용자 정보 표시 -->
+  <section class="user-info" id="user-info">
+    <h2 id="user-Id"></h2>
+    <p id="user-email"></p>
+  </section>
+
+  <!-- 나의 작성글 -->
+  <div class="tab-menu">
+    <button class="tab-btn active" data-tab="posts">나의 글 모아보기</button>
+  </div>
+
+  <!-- 작성글 탭 콘텐츠 -->
+  <div id="posts" class="tab-content active">
+    <table>
+      <thead>
+        <tr>
+          <th>분류</th>
+          <th>제목</th>
+          <th>작성일</th>
+        </tr>
+      </thead>
+      <tbody id="post-list">
+        <!-- 작성 글 삽입 -->
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- 페이지 하단 푸터 -->
+<footer class="footer">
+  <p>© 2025 TripNow. All rights reserved.</p>
+</footer>
+
+<!-- 로그아웃 버튼 -->
+<button class="logout-fixed" onclick="handleLogout()">로그아웃</button>
+
+<script>
+  function getLoginUser() {
+    return JSON.parse(localStorage.getItem("loginUser"));
+  }
+  const user = getLoginUser();
+
+  if (!user) {
+    alert("로그인이 필요합니다.");
+    location.href = "login.html";
+  }
+
+  // 이메일 표시
+  document.getElementById("user-email").innerText = user.email;
+
+  // 이메일 앞부분만 표시
+  const emailId = user.email.split("@")[0]; // '@' 앞부분만 추출
+  document.getElementById("user-Id").innerText = emailId;
+
+  // 작성한 글 불러오기
+  const db = window.db;
+  const postList = document.getElementById("post-list");
+
+  db.collection("posts")
+    .where("author", "==", user.email) // 작성자 이메일로 글 필터링
+    .get()
+    .then((querySnapshot) => {
+      postList.innerHTML = "";
+
+      querySnapshot.forEach((doc) => {
+        const post = doc.data();
+
+        // type 표시 바꾸기
+        const typeLabel = post.type === "group" ? "여행 모집" :
+                          post.type === "story" ? "여행 이야기" : post.type;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${typeLabel}</td>
+          <td>${post.title}</td>
+          <td>${post.date ? post.date.toDate().toLocaleDateString() : ""}</td>
+        `;
+        postList.appendChild(tr);
+      });
+    })
+    .catch((error) => {
+      console.error("글 불러오기 실패:", error);
+    });
+
+  // 로그아웃 함수
+  function handleLogout() {
+    firebase.auth().signOut().then(() => {
+      localStorage.removeItem("loginUser");
+      alert("로그아웃 되었습니다.");
+      location.href = "login.html";
+    }).catch((error) => {
+      console.error("로그아웃 실패:", error);
+      alert("로그아웃 중 오류가 발생했습니다.");
+    });
+  }
+
+</script>
+
+</body>
+</html>

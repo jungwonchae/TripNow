@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripNow - list</title>
+
+  <!-- 외부 스타일시트 -->
+  <link rel="stylesheet" href="../assets/css/style2.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <!-- Firebase 초기화 -->
+  <script src="../assets/js/firebase-init.js"></script>
+
+  <style>
+    .write-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    .write-container h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    label {
+      display: block;
+      margin-top: 1.2rem;
+      font-weight: bold;
+    }
+    input[type="text"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    textarea {
+      min-height: 200px;
+    }
+    .btn-box {
+      text-align: right;
+      margin-top: 2rem;
+    }
+    .btn-box button {
+      background-color: #202032;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn-box button:hover {
+      background-color: #343456;
+    }
+  </style>
+</head>
+
+<body>
+<!-- ========== 상단 공통 헤더 영역 ========== -->
+<header class="main-header">
+    <div class="header-top container">
+  
+      <div class="logo-box">
+        <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
+      </div>
+  
+      <a href="login.html" class="login-link">LOGIN</a>
+    </div>
+  
+    <!-- 하단 네비게이션 바 -->
+    <nav class="nav-bar">
+      <a href="home.html">Home</a>
+      <a href="list.html">TALK</a>
+      <a href="notice.html">About</a>
+    </nav>
+</header>
+
+<main>
+    <!-- 전체 입력 폼을 감싸는 하얀색/박스 모양 컨테이너 style 적용 -->
+  <div class="write-container">
+      <!-- 박스 맨 위에 있는 굵고 큰 제목 + 텍스트 밑에 줄 적용 -->
+    <h2>📌 게시글 작성</h2>
+    <form id="writeForm">
+      <!-- 제목 입력 -->
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" required />
+
+      <!-- 게시글 종류 선택 -->
+      <label for="type">게시글 유형</label>
+      <select id="type" name="type">
+        <option value="group">여행 모집</option>
+        <option value="story">여행 이야기</option>
+      </select>
+
+      <!-- 내용 입력 -->
+      <label for="content">내용</label>
+      <textarea id="content" name="content" required></textarea>
+
+      <div class="btn-box">
+        <button type="submit">작성 완료</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- ========== 푸터 ========== -->
+<footer class="footer">
+    <p>© 2025 TripNow. All rights reserved.</p>
+</footer>
+
+<!-- 작성 기능 -->
+<script>
+    document.getElementById("writeForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+  
+      const user = auth.currentUser;
+      if (!user) {
+        alert("로그인이 필요합니다.");
+        location.href = "login.html";
+        return;
+      }
+      const post = {
+        title: document.getElementById("title").value,
+        content: document.getElementById("content").value,
+        type: document.getElementById("type").value,
+        author: user.email,
+        uid: user.uid,
+        date: new Date(),
+        views: 0,
+      };
+
+      try {
+        await db.collection("posts").add(post);
+        alert("게시글이 성공적으로 작성되었습니다!");
+        location.href = "list.html";
+      } catch (err) {
+        console.error("게시글 작성 실패:", err);
+        alert("게시글 작성 중 오류가 발생했습니다.");
+      }
+    });
+  </script>
+
+</body>
+</html>
