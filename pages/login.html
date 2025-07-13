@@ -199,6 +199,7 @@
 
         .footer-link:hover {
             color: #1d1d3f;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -250,7 +251,7 @@
     </div>
 
 
-    <!-- 비밀번호 보기/숨기기 스크립트 -->
+    <!-- 비밀번호 보기/숨기기 -->
     <script>
         const toggleIcons = document.querySelectorAll('.toggle-eye');
 
@@ -284,20 +285,18 @@
             return;
         }
     
-        // Firebase 로그인 시도
         window.auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-            // 로그인 성공
-            const user = userCredential.user;
+                // 로그인 성공
+                const user = userCredential.user;
 
-            alert("로그인 성공!");
-            
-            localStorage.setItem("loginUser", JSON.stringify(user));
-            location.href = "home.html"; // 성공 시 홈으로 이동
+                alert("로그인 성공!");
+                
+                localStorage.setItem("loginUser", JSON.stringify(user));
+                location.href = "home.html"; // 성공 시 홈으로 이동
             })
             .catch((error) => {
-            // 로그인 실패
-            alert("로그인 실패: " + error.message);
+                alert("로그인 실패! "); // 로그인 실패 시 에러 메세지 
             });
         });
   </script>

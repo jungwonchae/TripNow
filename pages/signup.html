@@ -296,6 +296,15 @@
       return;
     }
 
+    // 체크박스 2개 모두 체크했는지 확인
+    const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+    const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+    if (!allChecked) {
+      alert("약관에 모두 동의해야 회원가입이 가능합니다.");
+      return;
+    }
+
     window.auth.createUserWithEmailAndPassword(email, pw)
     .then(() => {
       alert("회원가입 완료!");
