@@ -13,32 +13,37 @@
 
         <!-- pretendard폰트 적용 -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+        
         <style>
-            /* 선택지 묶음 */
+
+            /* 한 질문(번호 + 선택지) */
             .choice-row {
                 display: flex;
                 align-items: center;  /* 번호 세로 중앙 정렬 */
                 /* gap: 2rem; */
             }
 
+            /* 질문 번호 텍스트 스타일 */
             .question-number{
                 font-size: clamp(24px, 4vw, 35px); /* 반응형으로 사용하기 위함 */
                 font-weight: 700; /* bold */
             }
 
+            /* 선택지 */
             .choice-content {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
 
-            /* 이미지 선택지 */
+            /* 이미지 가로 배치 */
             .choices {
                 display: flex;
                 justify-content: center;
                 gap: clamp(0.5rem, 4vw, 2rem);/* 최소 0.5rem, 최대 2rem */
             }
-
+            
+            /* 이미지 스타일 설정 */
             .choice img {
                 width: clamp(80px, 20vw, 180px); /* 이미지도 반응형 크기로 */
                 border: 1px solid #9B9898;
@@ -47,10 +52,12 @@
                 height: auto;
             }
 
+            /* 마우스 올렸을 때 스타일 */
             .choice img:hover {
                 cursor: pointer;
             }
 
+            /* 이미지 선택 시 스타일 */
             .choice img.selected{ /* 그림 선택 시 효과 */
                 width: clamp(80px, 20vw, 180px); /* 이미지도 반응형 크기로 */
                 border: 3px solid #9B9898;
@@ -59,7 +66,7 @@
                 height: auto;
             }
 
-            /* 태그 */
+            /* 선택지 해시태그 스타일 */
             .choice-tag {
                 font-size: clamp(16px, 3vw, 24px); /* 반응형으로 사용하기 위함 */
                 font-weight: 700; /* bold */
@@ -71,7 +78,7 @@
     </head>
     <body>
         <div class="wrapper">
-             <!--  헤더  -->
+            <!--  헤더 : 로고 및 notice 링크 -->
             <header class="header">
                 <a href="index.html">
                     <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
@@ -84,6 +91,7 @@
                     <div class="question-container">
                         <h2>당신의 여행 취향을 선택해주세요</h2>
                         <!-- 선택지 박스-->
+                        <!-- 첫 번째 질문 : 자연 vs 도시 -->
                         <div class="choice-row">
                             <p class="question-number">1.</p>
                             <div class="choice-content">
@@ -102,6 +110,7 @@
                         </div>
 
                         <!-- 선택지 박스-->
+                        <!-- 두 번째 질문 : 휴양 vs 관광 -->
                         <div class="choice-row">
                             <p class="question-number">2.</p>
                             <div class="choice-content">
@@ -128,29 +137,36 @@
                 <p>@ 2025 TripNow All rights reserved.</p>
             </footer>
         </div>
+
+        <!-- javascript 코드 -->
         <script>
             window.onload = function () {
                 sessionStorage.clear(); // 새로고침 시 모든 선택 초기화
             };
 
+            // 모든 선택지 이미지에 클릭 이벤트 부여
             document.querySelectorAll(".choice img").forEach((img)=>{
                 img.addEventListener("click", () => {
                     const [group, value] = img.id.split("-");
+                    // 선택한 값을 sessionstorage에 저장
                     sessionStorage.setItem(group, value);
+                    // 모든 선택지에서 선택 효과 제거
                     document.querySelectorAll(`img[id^="${group}"]`).forEach(i => i.classList.remove("selected"));
+                    // 현재 클릭한 이미지에 선택 효과 추가
                     img.classList.add("selected");
                 })
             });
 
+            // 제출 버튼 클릭 시
             document.getElementById("submit").addEventListener("click", function() {
                 const choice1 = sessionStorage.getItem("choice1");
                 const choice2 = sessionStorage.getItem("choice2");
 
                 if(!choice1 || !choice2){
-                    alert("두 가지 모두 선택해주세요!");
+                    alert("두 가지 모두 선택해주세요!"); // 하나라도 선택 안했을 시 알람 표시
                 }
                 else{
-                    window.location.href = "loading.html"
+                    window.location.href = "loading.html" // 선택 완료 시 로딩 페이지 이동
                 };
             });
         </script>
