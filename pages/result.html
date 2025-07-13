@@ -17,29 +17,29 @@
     </head>
     <body>
         <div class="wrapper">
-             <!--  헤더  -->
+            <!--  헤더: 로고 및 About 페이지 링크 -->
             <header class="header">
                 <a href="index.html">
                     <img src="../assets/images/small_logo.svg" alt="TripNow Logo" />
                 </a>
                 <a href="notice.html">About</a>
             </header>
-            <!--  메인 콘텐츠 영역  -->
+            <!--  메인 콘텐츠 영역: 여행지 결과를 보여주는 영역  -->
             <main>
                 <section class="main-hero">
                     <img src="../assets/images/result.svg" alt="result" />
                     <h2>나에게 맞는 여행지는?</h2>
-                    <!-- 확인 버튼 -->
+                    <!-- 결과 확인 버튼 -->
                     <button class="hero-btn" id="check"> 지금 확인하기! </button>
                 </section>
             </main>
-            <!--  푸터  -->
+            <!--  푸터: 저작권 정보  -->
             <footer class="footer">
                 <p>@ 2025 TripNow All rights reserved.</p>
             </footer>
         </div>
         <script>
-            // 다음 페이지 redirect
+            // 다음 페이지 redirect: "지금 확인하기!" 버튼 클릭 시
             document.getElementById("check").addEventListener("click", function() {
                 const choice1 = sessionStorage.getItem("choice1");
                 const choice2 = sessionStorage.getItem("choice2");
@@ -48,23 +48,27 @@
                 console.log("choice1:", choice1);
                 console.log("choice2:", choice2);
 
+                // 조건 별로 추천 페이지 랜덤 이동
                 if(choice1 === "nature" && choice2 === "rest"){
-                    // 몰디브 || 뉴질랜드
+                    // 자연+휴양->몰디브 || 뉴질랜드
                     const pages = ["maldives.html", "newzeland.html"];
                     const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
                     location.href = randPage;
                 }  
                 if(choice1 === "nature" && choice2 === "tour"){
-
+                    // 자연+관광 -> 스위스 루체른 || 뉴질랜드 퀸즈타운
+                    const pages = ["lucerne.html", "queenstown.html"];
+                    const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
+                    location.href = randPage;
                 }
                 if(choice1 === "city" && choice2 === "rest"){
-                    // 발리  || 바르셀로나
+                    // 도시+휴양 -> 발리  || 바르셀로나
                     const pages = ["barcelona.html", "bali.html"];
                     const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
                     location.href = randPage;
                 }
                 if(choice1 === "city" && choice2 === "tour"){
-                    // 뉴욕 || 도쿄 || 홍콩
+                    // 도시+관광 -> 뉴욕 || 도쿄 || 홍콩
                     const pages = ["newyork.html", "tokyo.html", "hongkong.html"];
                     const randPage = pages[Math.floor(Math.random() * pages.length)]; // 패이지 랜덤
                     location.href = randPage;
