@@ -2,30 +2,35 @@
 <html lang="ko">
     <head>
         <meta charset="UTF-8"/>
-        <!-- 반응형 추가 -->
+        <!-- 반응형 웹 설정: 모바일, 태블릿에서도 화면 깨지지 않게 해주는 설정 -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
+        <!-- 브라우저 탭에 뜨는 페이지 제목 -->
         <title>TripNow - 여행지 추천을 한눈에</title>
 
-        <!-- 외부 스타일시트 불러오기 -->
+        <!-- 외부 CSS 불러오기: 스타일을 따로 관리하기 위해 연결 -->
         <link rel="stylesheet" href="../assets/css/style.css" />
 
-        <!-- pretendard폰트 적용 -->
+        <!-- Pretendard 폰트 불러오기: 예쁜 글꼴 적용하려고 추가 -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     </head>
 
     <body>
+        <!-- 페이지 전체를 감싸는 div -->
         <div class="wrapper">
+            
             <!--  헤더  -->
             <header class="header"></header>
             <!--  메인 콘텐츠 영역 -->
             <main>
                 <section class="main-hero">
+                    <!-- 여기엔 메인 로고랑 버튼이 가운데 들어감 -->
                     <!-- 중앙: 로고 이미지 -->
                     <div class="logo-box">
                         <img src="../assets/images/biglogo.svg" alt="TripNow Logo" />
                     </div>
-                    <!-- 시작 버튼 -->
+                    <!-- 여행지 추천 받기 버튼 -->
+                    <!-- 클릭시 select.html로 이동 -->
                     <a href="select.html" class="hero-btn"> 지금 여행지 추천을 받아보세요! → </a>
                 </section>
             </main>
